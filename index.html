@@ -241,6 +241,15 @@ a{color:var(--accent2);text-decoration:none}
   transition:background .2s;
 }
 .date-poll-btn:hover{background:rgba(232,93,74,.18)}
+.card-owner-actions{display:flex;gap:8px;margin-top:10px}
+.card-owner-btn{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:7px 14px;border-radius:var(--radius-sm);font-size:.78rem;font-weight:600;
+  border:1.5px solid var(--border);transition:all .2s;
+}
+.card-owner-btn:hover{border-color:var(--accent)}
+.card-owner-btn.delete-btn{color:var(--red)}
+.card-owner-btn.delete-btn:hover{border-color:var(--red);background:var(--red-bg)}
 
 /* ===== STATS BAR ===== */
 .stats-row{
@@ -442,7 +451,7 @@ a{color:var(--accent2);text-decoration:none}
 <div class="modal-overlay" id="modal-create">
   <div class="modal">
     <div class="modal-handle"></div>
-    <div class="modal-title">✨ Nuova proposta</div>
+    <div class="modal-title" id="create-modal-title">✨ Nuova proposta</div>
     <div class="form-group">
       <label class="form-label">Nome del locale *</label>
       <input id="create-name" placeholder="Es: Trattoria da Mario">
@@ -474,7 +483,7 @@ a{color:var(--accent2);text-decoration:none}
     <div class="error-msg" id="create-error"></div>
     <div style="display:flex;gap:10px;margin-top:8px">
       <button class="btn-secondary" style="flex:1" onclick="closeModal('modal-create')">Annulla</button>
-      <button class="btn-primary" style="flex:1" onclick="submitProposal()">Pubblica</button>
+      <button class="btn-primary" style="flex:1" id="create-submit-btn" onclick="submitProposal()">Pubblica</button>
     </div>
   </div>
 </div>
@@ -750,6 +759,10 @@ function renderProposals() {
           <button class="vote-btn ${userVote === 'no' ? 'voted voted-no' : ''}" onclick="vote('${p.id}','no')">👎 No</button>
         </div>` : ''}
         ${datePollBtn}
+        ${p.authorId === user.id ? `<div class="card-owner-actions">
+          <button class="card-owner-btn" onclick="openEditModal('${p.id}')">✏️ Modifica</button>
+          <button class="card-owner-btn delete-btn" onclick="deleteProposal('${p.id}')">🗑 Elimina</button>
+        </div>` : ''}
         <div style="margin-top:10px;font-size:.72rem;color:var(--text3)">Proposto da ${esc(p.authorName || 'Anonimo')}</div>
       </div>
     </div>`;
@@ -795,8 +808,9 @@ function vote(proposalId, value) {
   else if (status === 'rejected') toast('Proposta scartata');
 }
 
-// ===== CREATE PROPOSAL =====
+// ===== CREATE / EDIT PROPOSAL =====
 let tempProposalImg = null;
+let editingId = null;
 
 document.getElementById('create-img-input').addEventListener('change', function(e) {
   const file = e.target.files[0];
@@ -811,6 +825,9 @@ document.getElementById('create-img-input').addEventListener('change', function(
 });
 
 function openCreateModal() {
+  editingId = null;
+  document.getElementById('create-modal-title').textContent = '✨ Nuova proposta';
+  document.getElementById('create-submit-btn').textContent = 'Pubblica';
   document.getElementById('create-name').value = '';
   document.getElementById('create-date').value = '';
   document.getElementById('create-desc').value = '';
@@ -819,6 +836,31 @@ function openCreateModal() {
   document.getElementById('create-error').textContent = '';
   tempProposalImg = null;
   document.getElementById('create-img-area').innerHTML = '<div class="upload-icon">🖼</div><span>Tocca per caricare un\'immagine</span>';
+  document.getElementById('modal-create').classList.add('open');
+}
+
+function openEditModal(proposalId) {
+  const proposals = getProposals();
+  const p = proposals.find(x => x.id === proposalId);
+  if (!p) return;
+
+  editingId = proposalId;
+  document.getElementById('create-modal-title').textContent = '✏️ Modifica proposta';
+  document.getElementById('create-submit-btn').textContent = 'Salva modifiche';
+  document.getElementById('create-name').value = p.name || '';
+  document.getElementById('create-date').value = p.date || '';
+  document.getElementById('create-desc').value = p.desc || '';
+  document.getElementById('create-maps').value = p.maps || '';
+  document.getElementById('create-insta').value = p.insta || '';
+  document.getElementById('create-error').textContent = '';
+
+  tempProposalImg = p.image || null;
+  if (p.image) {
+    document.getElementById('create-img-area').innerHTML = `<img src="${p.image}" alt="preview">`;
+  } else {
+    document.getElementById('create-img-area').innerHTML = '<div class="upload-icon">🖼</div><span>Tocca per caricare un\'immagine</span>';
+  }
+
   document.getElementById('modal-create').classList.add('open');
 }
 
@@ -831,28 +873,54 @@ function submitProposal() {
   const user = getUser();
   const proposals = getProposals();
 
-  const proposal = {
-    id: genId(),
-    name,
-    date: document.getElementById('create-date').value || null,
-    desc: document.getElementById('create-desc').value.trim() || null,
-    maps: document.getElementById('create-maps').value.trim() || null,
-    insta: document.getElementById('create-insta').value.trim() || null,
-    image: tempProposalImg || null,
-    authorId: user.id,
-    authorName: user.name,
-    votes: {},
-    voterNames: {},
-    voterPhotos: {},
-    datePoll: { dates: [], votes: {} },
-    created: Date.now()
-  };
+  if (editingId) {
+    // === EDIT MODE ===
+    const p = proposals.find(x => x.id === editingId);
+    if (!p) return;
+    p.name = name;
+    p.date = document.getElementById('create-date').value || null;
+    p.desc = document.getElementById('create-desc').value.trim() || null;
+    p.maps = document.getElementById('create-maps').value.trim() || null;
+    p.insta = document.getElementById('create-insta').value.trim() || null;
+    p.image = tempProposalImg || null;
+    saveProposals(proposals);
+    closeModal('modal-create');
+    editingId = null;
+    renderApp();
+    toast('Proposta aggiornata ✅');
+  } else {
+    // === CREATE MODE ===
+    const proposal = {
+      id: genId(),
+      name,
+      date: document.getElementById('create-date').value || null,
+      desc: document.getElementById('create-desc').value.trim() || null,
+      maps: document.getElementById('create-maps').value.trim() || null,
+      insta: document.getElementById('create-insta').value.trim() || null,
+      image: tempProposalImg || null,
+      authorId: user.id,
+      authorName: user.name,
+      votes: {},
+      voterNames: {},
+      voterPhotos: {},
+      datePoll: { dates: [], votes: {} },
+      created: Date.now()
+    };
+    proposals.unshift(proposal);
+    saveProposals(proposals);
+    closeModal('modal-create');
+    renderApp();
+    toast('Proposta creata! 🚀');
+  }
+}
 
-  proposals.unshift(proposal);
+function deleteProposal(proposalId) {
+  if (!confirm('Sei sicuro di voler eliminare questa proposta? L\'azione è irreversibile.')) return;
+  let proposals = getProposals();
+  proposals = proposals.filter(p => p.id !== proposalId);
   saveProposals(proposals);
-  closeModal('modal-create');
   renderApp();
-  toast('Proposta creata! 🚀');
+  toast('Proposta eliminata 🗑');
 }
 
 // ===== DATE POLL =====

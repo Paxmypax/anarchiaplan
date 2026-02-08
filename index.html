@@ -7,376 +7,53 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-/* ===== RESET & VARIABLES ===== */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#0a0a0c;
-  --bg2:#131318;
-  --bg3:#1a1a22;
-  --surface:#1e1e28;
-  --surface2:#262632;
-  --border:#2a2a38;
-  --text:#f0eff4;
-  --text2:#a8a6b8;
-  --text3:#6e6c80;
-  --accent:#e85d4a;
-  --accent2:#ff7a5c;
-  --green:#3dd68c;
-  --green-bg:rgba(61,214,140,.12);
-  --yellow:#fbbf24;
-  --yellow-bg:rgba(251,191,36,.12);
-  --red:#f87171;
-  --red-bg:rgba(248,113,113,.12);
-  --radius:16px;
-  --radius-sm:10px;
-  --radius-xs:6px;
-  --shadow:0 8px 32px rgba(0,0,0,.4);
-  --shadow-sm:0 2px 12px rgba(0,0,0,.3);
-  --font-display:'Outfit',sans-serif;
-  --font-body:'DM Sans',sans-serif;
-  --safe-bottom:env(safe-area-inset-bottom, 0px);
-}
+:root{--bg:#0a0a0c;--bg2:#131318;--bg3:#1a1a22;--surface:#1e1e28;--surface2:#262632;--border:#2a2a38;--text:#f0eff4;--text2:#a8a6b8;--text3:#6e6c80;--accent:#e85d4a;--accent2:#ff7a5c;--green:#3dd68c;--green-bg:rgba(61,214,140,.12);--yellow:#fbbf24;--yellow-bg:rgba(251,191,36,.12);--red:#f87171;--red-bg:rgba(248,113,113,.12);--radius:16px;--radius-sm:10px;--font-display:'Outfit',sans-serif;--font-body:'DM Sans',sans-serif;--safe-bottom:env(safe-area-inset-bottom,0px)}
 html{font-size:16px;-webkit-tap-highlight-color:transparent}
-body{
-  font-family:var(--font-body);
-  background:var(--bg);
-  color:var(--text);
-  min-height:100dvh;
-  overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
-}
+body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 button{font-family:var(--font-body);cursor:pointer;border:none;outline:none;background:none;color:var(--text)}
 input,textarea{font-family:var(--font-body);color:var(--text);background:var(--bg3);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;font-size:.95rem;width:100%;outline:none;transition:border .2s}
-input:focus,textarea:focus{border-color:var(--accent)}
-textarea{resize:vertical;min-height:80px}
-a{color:var(--accent2);text-decoration:none}
-
-/* ===== SCROLLBAR ===== */
-::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
-
-/* ===== UTILITY ===== */
-.hidden{display:none!important}
-.fade-in{animation:fadeIn .4s ease}
+input:focus,textarea:focus{border-color:var(--accent)}textarea{resize:vertical;min-height:80px}a{color:var(--accent2);text-decoration:none}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+.hidden{display:none!important}.fade-in{animation:fadeIn .4s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 @keyframes slideUp{from{opacity:0;transform:translateY(100%)}to{opacity:1;transform:translateY(0)}}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
-
-/* ===== PAGE WRAPPER ===== */
-.page{display:none;min-height:100dvh;padding-bottom:calc(80px + var(--safe-bottom))}
-.page.active{display:block}
-
-/* ===== ONBOARDING ===== */
-#page-onboarding.active{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  min-height:100dvh;padding:32px 24px;text-align:center;
-  background:radial-gradient(ellipse at 50% 0%,rgba(232,93,74,.08),transparent 60%),var(--bg);
-}
-.onboard-logo{font-family:var(--font-display);font-size:2.4rem;font-weight:800;letter-spacing:-.03em;margin-bottom:4px}
-.onboard-logo span{color:var(--accent)}
-.onboard-sub{color:var(--text2);font-size:.9rem;margin-bottom:40px}
-.onboard-avatar-wrap{position:relative;width:100px;height:100px;margin:0 auto 24px;cursor:pointer}
-.onboard-avatar-wrap img,.onboard-avatar-wrap .avatar-placeholder{
-  width:100px;height:100px;border-radius:50%;object-fit:cover;
-  border:2.5px dashed var(--border);transition:border .2s;
-}
-.avatar-placeholder{
-  display:flex;align-items:center;justify-content:center;
-  background:var(--surface);font-size:2rem;
-}
-.onboard-avatar-wrap:hover img,.onboard-avatar-wrap:hover .avatar-placeholder{border-color:var(--accent)}
-.onboard-avatar-label{color:var(--text3);font-size:.78rem;margin-bottom:24px}
-.onboard-input{max-width:320px;text-align:center;margin-bottom:16px}
-.btn-primary{
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  background:var(--accent);color:#fff;font-weight:600;font-size:.95rem;
-  padding:14px 32px;border-radius:var(--radius);width:100%;max-width:320px;
-  transition:background .2s,transform .1s;
-}
-.btn-primary:active{transform:scale(.97)}
-.btn-primary:hover{background:var(--accent2)}
-.btn-secondary{
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  background:var(--surface);color:var(--text);font-weight:500;font-size:.9rem;
-  padding:12px 24px;border-radius:var(--radius);border:1.5px solid var(--border);
-  transition:border .2s;
-}
-.btn-secondary:hover{border-color:var(--accent)}
-.btn-sm{padding:8px 16px;font-size:.82rem;border-radius:var(--radius-sm)}
-.error-msg{color:var(--red);font-size:.8rem;margin-top:6px;min-height:20px}
-
-/* ===== ACCESS CODE ===== */
-#page-access.active{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  min-height:100dvh;padding:32px 24px;text-align:center;
-}
-.access-icon{font-size:3rem;margin-bottom:16px}
-.access-title{font-family:var(--font-display);font-size:1.5rem;font-weight:700;margin-bottom:8px}
-.access-desc{color:var(--text2);font-size:.88rem;margin-bottom:32px;max-width:280px}
-#access-input{max-width:280px;text-align:center;letter-spacing:4px;font-weight:600;font-size:1.1rem}
-
-/* ===== HEADER ===== */
-.app-header{
-  position:sticky;top:0;z-index:90;
-  background:rgba(10,10,12,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  padding:16px 20px 12px;border-bottom:1px solid rgba(42,42,56,.5);
-}
-.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.header-brand{font-family:var(--font-display);font-size:1.3rem;font-weight:700;letter-spacing:-.02em}
-.header-brand span{color:var(--accent)}
-.header-user{display:flex;align-items:center;gap:8px;cursor:pointer}
-.header-user img,.header-user .mini-avatar{width:32px;height:32px;border-radius:50%;object-fit:cover}
-.mini-avatar{display:flex;align-items:center;justify-content:center;background:var(--surface2);font-size:.75rem;font-weight:600}
-.header-tabs{display:flex;gap:4px}
-.tab-btn{
-  padding:8px 16px;border-radius:20px;font-size:.82rem;font-weight:500;
-  color:var(--text3);transition:all .2s;white-space:nowrap;
-}
-.tab-btn.active{background:var(--accent);color:#fff}
-.tab-btn:not(.active):hover{color:var(--text)}
-
-/* ===== NAV BOTTOM ===== */
-.bottom-nav{
-  position:fixed;bottom:0;left:0;right:0;z-index:100;
-  background:rgba(19,19,24,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border-top:1px solid var(--border);
-  display:flex;justify-content:space-around;align-items:center;
-  padding:8px 0 calc(8px + var(--safe-bottom));
-}
-.nav-item{
-  display:flex;flex-direction:column;align-items:center;gap:2px;
-  padding:6px 16px;color:var(--text3);font-size:.68rem;font-weight:500;
-  transition:color .2s;
-}
-.nav-item.active{color:var(--accent)}
-.nav-item svg{width:22px;height:22px}
-.fab{
-  position:fixed;bottom:calc(76px + var(--safe-bottom));right:20px;z-index:100;
-  width:56px;height:56px;border-radius:50%;
-  background:var(--accent);color:#fff;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.6rem;font-weight:300;
-  box-shadow:0 4px 24px rgba(232,93,74,.4);
-  transition:transform .2s,box-shadow .2s;
-}
-.fab:hover{transform:scale(1.08);box-shadow:0 6px 32px rgba(232,93,74,.5)}
-.fab:active{transform:scale(.95)}
-
-/* ===== MAIN CONTENT ===== */
+.page{display:none;min-height:100dvh;padding-bottom:calc(80px + var(--safe-bottom))}.page.active{display:block}
+#page-onboarding.active{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100dvh;padding:32px 24px;text-align:center;background:radial-gradient(ellipse at 50% 0%,rgba(232,93,74,.08),transparent 60%),var(--bg)}
+.onboard-logo{font-family:var(--font-display);font-size:2.4rem;font-weight:800;letter-spacing:-.03em;margin-bottom:4px}.onboard-logo span{color:var(--accent)}.onboard-sub{color:var(--text2);font-size:.9rem;margin-bottom:40px}
+.onboard-avatar-wrap{position:relative;width:100px;height:100px;margin:0 auto 24px;cursor:pointer}.onboard-avatar-wrap img,.onboard-avatar-wrap .avatar-placeholder{width:100px;height:100px;border-radius:50%;object-fit:cover;border:2.5px dashed var(--border);transition:border .2s}.avatar-placeholder{display:flex;align-items:center;justify-content:center;background:var(--surface);font-size:2rem}.onboard-avatar-wrap:hover img,.onboard-avatar-wrap:hover .avatar-placeholder{border-color:var(--accent)}.onboard-avatar-label{color:var(--text3);font-size:.78rem;margin-bottom:24px}.onboard-input{max-width:320px;text-align:center;margin-bottom:16px}
+.btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--accent);color:#fff;font-weight:600;font-size:.95rem;padding:14px 32px;border-radius:var(--radius);width:100%;max-width:320px;transition:background .2s,transform .1s}.btn-primary:active{transform:scale(.97)}.btn-primary:hover{background:var(--accent2)}.btn-primary:disabled{opacity:.5;pointer-events:none}
+.btn-secondary{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--surface);color:var(--text);font-weight:500;font-size:.9rem;padding:12px 24px;border-radius:var(--radius);border:1.5px solid var(--border);transition:border .2s}.btn-secondary:hover{border-color:var(--accent)}.btn-sm{padding:8px 16px;font-size:.82rem;border-radius:var(--radius-sm)}.error-msg{color:var(--red);font-size:.8rem;margin-top:6px;min-height:20px}
+#page-access.active{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100dvh;padding:32px 24px;text-align:center}.access-icon{font-size:3rem;margin-bottom:16px}.access-title{font-family:var(--font-display);font-size:1.5rem;font-weight:700;margin-bottom:8px}.access-desc{color:var(--text2);font-size:.88rem;margin-bottom:32px;max-width:280px}#access-input{max-width:280px;text-align:center;letter-spacing:4px;font-weight:600;font-size:1.1rem}
+.app-header{position:sticky;top:0;z-index:90;background:rgba(10,10,12,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:16px 20px 12px;border-bottom:1px solid rgba(42,42,56,.5)}.header-top{display:flex;align-items:center;justify-content:space-between}.header-brand{font-family:var(--font-display);font-size:1.3rem;font-weight:700;letter-spacing:-.02em}.header-brand span{color:var(--accent)}.header-user{display:flex;align-items:center;gap:8px;cursor:pointer}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(19,19,24,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;justify-content:space-around;align-items:center;padding:8px 0 calc(8px + var(--safe-bottom))}.nav-item{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 16px;color:var(--text3);font-size:.68rem;font-weight:500;transition:color .2s}.nav-item.active{color:var(--accent)}.nav-item svg{width:22px;height:22px}
+.fab{position:fixed;bottom:calc(76px + var(--safe-bottom));right:20px;z-index:100;width:56px;height:56px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.6rem;box-shadow:0 4px 24px rgba(232,93,74,.4);transition:transform .2s}.fab:hover{transform:scale(1.08)}.fab:active{transform:scale(.95)}
 .main-content{padding:16px 20px}
-.section-title{font-family:var(--font-display);font-size:1.1rem;font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.badge{
-  display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;
-  font-size:.7rem;font-weight:600;letter-spacing:.02em;
-}
-.badge-voting{background:var(--yellow-bg);color:var(--yellow)}
-.badge-approved{background:var(--green-bg);color:var(--green)}
-.badge-rejected{background:var(--red-bg);color:var(--red)}
-
-/* ===== PROPOSAL CARD ===== */
-.card{
-  background:var(--surface);border-radius:var(--radius);overflow:hidden;
-  margin-bottom:16px;border:1px solid var(--border);transition:border .2s;
-}
-.card:hover{border-color:rgba(232,93,74,.3)}
-.card-img{
-  width:100%;height:160px;object-fit:cover;background:var(--bg3);
-  display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:2.5rem;
-}
-.card-img img{width:100%;height:160px;object-fit:cover}
-.card-body{padding:16px}
-.card-name{font-family:var(--font-display);font-size:1.05rem;font-weight:600;margin-bottom:4px}
-.card-meta{display:flex;flex-wrap:wrap;align-items:center;gap:8px;color:var(--text3);font-size:.78rem;margin-bottom:10px}
-.card-meta svg{width:14px;height:14px}
-.card-desc{color:var(--text2);font-size:.85rem;line-height:1.5;margin-bottom:12px;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
-}
-.card-links{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
-.card-link{
-  display:inline-flex;align-items:center;gap:4px;
-  padding:5px 12px;border-radius:20px;font-size:.75rem;font-weight:500;
-  background:var(--bg3);color:var(--text2);transition:color .2s;
-}
-.card-link:hover{color:var(--accent2)}
-.card-link svg{width:13px;height:13px}
-.card-votes{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-.vote-group{display:flex;align-items:center;gap:4px;font-size:.82rem;font-weight:500}
-.vote-group.yes{color:var(--green)}
-.vote-group.maybe{color:var(--yellow)}
-.vote-group.no{color:var(--red)}
-.consent-bar-wrap{margin-bottom:14px}
-.consent-bar-label{display:flex;justify-content:space-between;font-size:.75rem;color:var(--text3);margin-bottom:6px}
-.consent-bar{height:6px;border-radius:4px;background:var(--bg3);overflow:hidden;position:relative}
-.consent-bar-fill{height:100%;border-radius:4px;transition:width .4s ease}
-.consent-bar-threshold{position:absolute;top:-2px;height:10px;width:1.5px;background:var(--text3);border-radius:1px}
-.card-avatars{display:flex;gap:-6px;margin-bottom:12px}
-.card-avatars .voter-av{
-  width:26px;height:26px;border-radius:50%;object-fit:cover;
-  border:2px solid var(--surface);margin-left:-8px;
-}
-.card-avatars .voter-av:first-child{margin-left:0}
-.card-avatars .voter-av-text{
-  width:26px;height:26px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:.6rem;font-weight:700;
-  border:2px solid var(--surface);margin-left:-8px;
-}
-.card-actions{display:flex;gap:8px}
-.vote-btn{
-  flex:1;display:flex;align-items:center;justify-content:center;gap:6px;
-  padding:10px;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;
-  border:1.5px solid var(--border);transition:all .2s;
-}
-.vote-btn:hover{border-color:var(--accent)}
-.vote-btn.voted{border-color:transparent}
-.vote-btn.voted-yes{background:var(--green-bg);color:var(--green);border-color:var(--green)}
-.vote-btn.voted-maybe{background:var(--yellow-bg);color:var(--yellow);border-color:var(--yellow)}
-.vote-btn.voted-no{background:var(--red-bg);color:var(--red);border-color:var(--red)}
-.date-poll-btn{
-  width:100%;margin-top:10px;padding:10px;border-radius:var(--radius-sm);
-  font-size:.82rem;font-weight:600;text-align:center;
-  background:rgba(232,93,74,.1);color:var(--accent2);border:1px solid rgba(232,93,74,.2);
-  transition:background .2s;
-}
-.date-poll-btn:hover{background:rgba(232,93,74,.18)}
-.card-owner-actions{display:flex;gap:8px;margin-top:10px}
-.card-owner-btn{
-  display:inline-flex;align-items:center;gap:5px;
-  padding:7px 14px;border-radius:var(--radius-sm);font-size:.78rem;font-weight:600;
-  border:1.5px solid var(--border);transition:all .2s;
-}
-.card-owner-btn:hover{border-color:var(--accent)}
-.card-owner-btn.delete-btn{color:var(--red)}
-.card-owner-btn.delete-btn:hover{border-color:var(--red);background:var(--red-bg)}
-.force-approve-btn{
-  width:100%;margin-top:10px;padding:11px;border-radius:var(--radius-sm);
-  font-size:.84rem;font-weight:700;text-align:center;
-  background:var(--green-bg);color:var(--green);border:1.5px solid rgba(61,214,140,.3);
-  transition:all .2s;
-}
-.force-approve-btn:hover{background:rgba(61,214,140,.2);border-color:var(--green)}
-.join-btn{
-  width:100%;margin-top:10px;padding:11px;border-radius:var(--radius-sm);
-  font-size:.84rem;font-weight:700;text-align:center;
-  background:rgba(96,165,250,.1);color:#60a5fa;border:1.5px solid rgba(96,165,250,.25);
-  transition:all .2s;
-}
-.join-btn:hover{background:rgba(96,165,250,.18);border-color:#60a5fa}
-.participants-wrap{margin-top:12px;margin-bottom:4px}
-.participants-label{font-size:.75rem;color:var(--text3);margin-bottom:6px;font-weight:500}
-.participants-list{display:flex;flex-wrap:wrap;gap:6px}
-.participant-chip{
-  display:inline-flex;align-items:center;gap:5px;
-  padding:4px 10px 4px 4px;border-radius:20px;
-  background:var(--green-bg);font-size:.75rem;font-weight:500;color:var(--green);
-}
-
-/* ===== STATS BAR ===== */
-.stats-row{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;
-}
-.stat-card{
-  background:var(--surface);border-radius:var(--radius-sm);padding:14px;text-align:center;
-  border:1px solid var(--border);
-}
-.stat-num{font-family:var(--font-display);font-size:1.5rem;font-weight:700}
-.stat-label{font-size:.7rem;color:var(--text3);margin-top:2px}
-.stat-num.accent{color:var(--accent)}
-.stat-num.green{color:var(--green)}
-.stat-num.yellow{color:var(--yellow)}
-
-/* ===== MODAL ===== */
-.modal-overlay{
-  position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.6);
-  display:none;align-items:flex-end;justify-content:center;
-  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
-}
-.modal-overlay.open{display:flex}
-.modal{
-  background:var(--bg2);border-radius:20px 20px 0 0;width:100%;max-width:480px;
-  max-height:90dvh;overflow-y:auto;padding:24px 20px calc(24px + var(--safe-bottom));
-  animation:slideUp .3s ease;
-}
-.modal-handle{width:36px;height:4px;border-radius:2px;background:var(--border);margin:0 auto 20px}
-.modal-title{font-family:var(--font-display);font-size:1.2rem;font-weight:700;margin-bottom:20px}
-.form-group{margin-bottom:16px}
-.form-label{display:block;font-size:.82rem;font-weight:500;color:var(--text2);margin-bottom:6px}
-.img-upload-area{
-  width:100%;height:140px;border:2px dashed var(--border);border-radius:var(--radius-sm);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  color:var(--text3);font-size:.82rem;cursor:pointer;transition:border .2s;overflow:hidden;
-  position:relative;
-}
-.img-upload-area:hover{border-color:var(--accent)}
-.img-upload-area img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.img-upload-area .upload-icon{font-size:1.5rem;margin-bottom:4px}
-
-/* ===== DATE POLL ===== */
-.date-poll-modal .date-item{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:12px 16px;background:var(--surface);border-radius:var(--radius-sm);
-  margin-bottom:8px;border:1px solid var(--border);
-}
-.date-item-text{font-size:.9rem;font-weight:500}
-.date-item-voters{display:flex;align-items:center;gap:6px}
-.date-avail-btns{display:flex;gap:6px}
-.date-avail-btn{
-  width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-  font-size:1rem;border:1.5px solid var(--border);transition:all .2s;
-}
-.date-avail-btn.sel-yes{background:var(--green-bg);border-color:var(--green)}
-.date-avail-btn.sel-no{background:var(--red-bg);border-color:var(--red)}
-.date-best{background:var(--green-bg)!important;border-color:var(--green)!important}
-.date-best::after{content:'⭐';position:absolute;top:-6px;right:-6px;font-size:.7rem}
-.date-item.date-best{position:relative}
-.add-date-row{display:flex;gap:8px;margin-bottom:16px}
-.add-date-row input{flex:1}
-.voter-count{font-size:.72rem;color:var(--text3);min-width:40px;text-align:right}
-
-/* ===== PRIVACY PAGE ===== */
-.privacy-content{padding:24px 20px;max-width:480px;margin:0 auto}
-.privacy-content h1{font-family:var(--font-display);font-size:1.5rem;font-weight:700;margin-bottom:8px}
-.privacy-content h2{font-family:var(--font-display);font-size:1.05rem;font-weight:600;margin-top:24px;margin-bottom:8px;color:var(--accent2)}
-.privacy-content p{color:var(--text2);font-size:.88rem;line-height:1.6;margin-bottom:12px}
-.back-link{display:inline-flex;align-items:center;gap:6px;color:var(--accent2);font-size:.88rem;font-weight:500;margin-bottom:20px}
-
-/* ===== EMPTY STATE ===== */
-.empty-state{
-  text-align:center;padding:48px 24px;color:var(--text3);
-}
-.empty-state .empty-icon{font-size:3rem;margin-bottom:12px;opacity:.5}
-.empty-state p{font-size:.9rem}
-
-/* ===== FILTER PILLS ===== */
-.filter-pills{display:flex;gap:6px;margin-bottom:16px;overflow-x:auto;padding-bottom:4px}
-.filter-pill{
-  padding:6px 14px;border-radius:20px;font-size:.78rem;font-weight:500;
-  white-space:nowrap;border:1.5px solid var(--border);color:var(--text3);transition:all .2s;
-}
-.filter-pill.active{border-color:var(--accent);color:var(--accent);background:rgba(232,93,74,.08)}
-
-/* ===== TOAST ===== */
-.toast{
-  position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:300;
-  background:var(--surface2);color:var(--text);padding:12px 24px;border-radius:var(--radius);
-  font-size:.85rem;font-weight:500;box-shadow:var(--shadow);
-  animation:fadeIn .3s ease;pointer-events:none;
-}
-
-/* ===== RESPONSIVE ===== */
-@media(min-width:600px){
-  .main-content{max-width:520px;margin:0 auto}
-  .modal{border-radius:20px;margin-bottom:20px}
-  .bottom-nav{max-width:520px;left:50%;transform:translateX(-50%);border-radius:16px 16px 0 0}
-  .fab{right:calc(50% - 260px + 20px)}
-}
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:.7rem;font-weight:600}.badge-voting{background:var(--yellow-bg);color:var(--yellow)}.badge-approved{background:var(--green-bg);color:var(--green)}.badge-rejected{background:var(--red-bg);color:var(--red)}
+.card{background:var(--surface);border-radius:var(--radius);overflow:hidden;margin-bottom:16px;border:1px solid var(--border);transition:border .2s}.card:hover{border-color:rgba(232,93,74,.3)}.card-img{width:100%;height:160px;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:2.5rem}.card-img img{width:100%;height:160px;object-fit:cover}.card-body{padding:16px}.card-name{font-family:var(--font-display);font-size:1.05rem;font-weight:600;margin-bottom:4px}.card-desc{color:var(--text2);font-size:.85rem;line-height:1.5;margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-links{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}.card-link{display:inline-flex;align-items:center;gap:4px;padding:5px 12px;border-radius:20px;font-size:.75rem;font-weight:500;background:var(--bg3);color:var(--text2);transition:color .2s}.card-link:hover{color:var(--accent2)}.card-link svg{width:13px;height:13px}
+.card-votes{display:flex;align-items:center;gap:12px;margin-bottom:14px}.vote-group{display:flex;align-items:center;gap:4px;font-size:.82rem;font-weight:500}.vote-group.yes{color:var(--green)}.vote-group.maybe{color:var(--yellow)}.vote-group.no{color:var(--red)}
+.consent-bar-wrap{margin-bottom:14px}.consent-bar-label{display:flex;justify-content:space-between;font-size:.75rem;color:var(--text3);margin-bottom:6px}.consent-bar{height:6px;border-radius:4px;background:var(--bg3);overflow:hidden;position:relative}.consent-bar-fill{height:100%;border-radius:4px;transition:width .4s ease}.consent-bar-threshold{position:absolute;top:-2px;height:10px;width:1.5px;background:var(--text3);border-radius:1px}
+.card-avatars{display:flex;margin-bottom:12px}.card-actions{display:flex;gap:8px}
+.vote-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;border-radius:var(--radius-sm);font-size:.85rem;font-weight:600;border:1.5px solid var(--border);transition:all .2s}.vote-btn:hover{border-color:var(--accent)}.vote-btn.voted-yes{background:var(--green-bg);color:var(--green);border-color:var(--green)}.vote-btn.voted-maybe{background:var(--yellow-bg);color:var(--yellow);border-color:var(--yellow)}.vote-btn.voted-no{background:var(--red-bg);color:var(--red);border-color:var(--red)}
+.date-poll-btn{width:100%;margin-top:10px;padding:10px;border-radius:var(--radius-sm);font-size:.82rem;font-weight:600;text-align:center;background:rgba(232,93,74,.1);color:var(--accent2);border:1px solid rgba(232,93,74,.2);transition:background .2s}.date-poll-btn:hover{background:rgba(232,93,74,.18)}
+.card-owner-actions{display:flex;gap:8px;margin-top:10px}.card-owner-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:var(--radius-sm);font-size:.78rem;font-weight:600;border:1.5px solid var(--border);transition:all .2s}.card-owner-btn:hover{border-color:var(--accent)}.card-owner-btn.delete-btn{color:var(--red)}.card-owner-btn.delete-btn:hover{border-color:var(--red);background:var(--red-bg)}
+.force-approve-btn{width:100%;margin-top:10px;padding:11px;border-radius:var(--radius-sm);font-size:.84rem;font-weight:700;text-align:center;background:var(--green-bg);color:var(--green);border:1.5px solid rgba(61,214,140,.3);transition:all .2s}.force-approve-btn:hover{background:rgba(61,214,140,.2);border-color:var(--green)}
+.join-btn{width:100%;margin-top:10px;padding:11px;border-radius:var(--radius-sm);font-size:.84rem;font-weight:700;text-align:center;background:rgba(96,165,250,.1);color:#60a5fa;border:1.5px solid rgba(96,165,250,.25);transition:all .2s}.join-btn:hover{background:rgba(96,165,250,.18);border-color:#60a5fa}
+.participants-wrap{margin-top:12px;margin-bottom:4px}.participants-label{font-size:.75rem;color:var(--text3);margin-bottom:6px;font-weight:500}.participants-list{display:flex;flex-wrap:wrap;gap:6px}.participant-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 10px 4px 4px;border-radius:20px;background:var(--green-bg);font-size:.75rem;font-weight:500;color:var(--green)}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}.stat-card{background:var(--surface);border-radius:var(--radius-sm);padding:14px;text-align:center;border:1px solid var(--border)}.stat-num{font-family:var(--font-display);font-size:1.5rem;font-weight:700}.stat-label{font-size:.7rem;color:var(--text3);margin-top:2px}.stat-num.accent{color:var(--accent)}.stat-num.green{color:var(--green)}.stat-num.yellow{color:var(--yellow)}
+.modal-overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.6);display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px)}.modal-overlay.open{display:flex}.modal{background:var(--bg2);border-radius:20px 20px 0 0;width:100%;max-width:480px;max-height:90dvh;overflow-y:auto;padding:24px 20px calc(24px + var(--safe-bottom));animation:slideUp .3s ease}.modal-handle{width:36px;height:4px;border-radius:2px;background:var(--border);margin:0 auto 20px}.modal-title{font-family:var(--font-display);font-size:1.2rem;font-weight:700;margin-bottom:20px}.form-group{margin-bottom:16px}.form-label{display:block;font-size:.82rem;font-weight:500;color:var(--text2);margin-bottom:6px}
+.img-upload-area{width:100%;height:140px;border:2px dashed var(--border);border-radius:var(--radius-sm);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--text3);font-size:.82rem;cursor:pointer;transition:border .2s;overflow:hidden;position:relative}.img-upload-area:hover{border-color:var(--accent)}.img-upload-area img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.img-upload-area .upload-icon{font-size:1.5rem;margin-bottom:4px}
+.date-poll-modal .date-item{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--surface);border-radius:var(--radius-sm);margin-bottom:8px;border:1px solid var(--border)}.date-item-text{font-size:.9rem;font-weight:500}.date-avail-btns{display:flex;gap:6px}.date-avail-btn{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;border:1.5px solid var(--border);transition:all .2s}.date-avail-btn.sel-yes{background:var(--green-bg);border-color:var(--green)}.date-avail-btn.sel-no{background:var(--red-bg);border-color:var(--red)}.date-item.date-best{position:relative;background:var(--green-bg)!important;border-color:var(--green)!important}.add-date-row{display:flex;gap:8px;margin-bottom:16px}.add-date-row input{flex:1}.voter-count{font-size:.72rem;color:var(--text3);min-width:40px;text-align:right}
+.privacy-content{padding:24px 20px;max-width:480px;margin:0 auto}.privacy-content h1{font-family:var(--font-display);font-size:1.5rem;font-weight:700;margin-bottom:8px}.privacy-content h2{font-family:var(--font-display);font-size:1.05rem;font-weight:600;margin-top:24px;margin-bottom:8px;color:var(--accent2)}.privacy-content p{color:var(--text2);font-size:.88rem;line-height:1.6;margin-bottom:12px}.back-link{display:inline-flex;align-items:center;gap:6px;color:var(--accent2);font-size:.88rem;font-weight:500;margin-bottom:20px}
+.empty-state{text-align:center;padding:48px 24px;color:var(--text3)}.empty-state .empty-icon{font-size:3rem;margin-bottom:12px;opacity:.5}.empty-state p{font-size:.9rem}
+.filter-pills{display:flex;gap:6px;margin-bottom:16px;overflow-x:auto;padding-bottom:4px}.filter-pill{padding:6px 14px;border-radius:20px;font-size:.78rem;font-weight:500;white-space:nowrap;border:1.5px solid var(--border);color:var(--text3);transition:all .2s}.filter-pill.active{border-color:var(--accent);color:var(--accent);background:rgba(232,93,74,.08)}
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:300;background:var(--surface2);color:var(--text);padding:12px 24px;border-radius:var(--radius);font-size:.85rem;font-weight:500;box-shadow:0 8px 32px rgba(0,0,0,.4);animation:fadeIn .3s ease;pointer-events:none}
+.loading-spinner{display:flex;align-items:center;justify-content:center;padding:48px;color:var(--text3);font-size:.9rem;gap:8px}.loading-spinner::before{content:'';width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+@media(min-width:600px){.main-content{max-width:520px;margin:0 auto}.modal{border-radius:20px;margin-bottom:20px}.bottom-nav{max-width:520px;left:50%;transform:translateX(-50%);border-radius:16px 16px 0 0}.fab{right:calc(50% - 260px + 20px)}}
 </style>
 </head>
 <body>
-
-<!-- ==================== ONBOARDING ==================== -->
 <div id="page-onboarding" class="page active">
   <div class="onboard-logo">Anarchia<span>.</span></div>
   <div class="onboard-sub">Organizza cene con il tuo gruppo</div>
@@ -389,8 +66,6 @@ a{color:var(--accent2);text-decoration:none}
   <div class="error-msg" id="onboard-error"></div>
   <button class="btn-primary" style="margin-top:12px" onclick="submitOnboarding()">Continua →</button>
 </div>
-
-<!-- ==================== ACCESS CODE ==================== -->
 <div id="page-access" class="page">
   <div class="access-icon">🔐</div>
   <div class="access-title">Codice del gruppo</div>
@@ -399,8 +74,6 @@ a{color:var(--accent2);text-decoration:none}
   <div class="error-msg" id="access-error"></div>
   <button class="btn-primary" style="margin-top:16px;max-width:280px" onclick="submitAccess()">Entra</button>
 </div>
-
-<!-- ==================== MAIN APP ==================== -->
 <div id="page-app" class="page">
   <header class="app-header">
     <div class="header-top">
@@ -411,740 +84,310 @@ a{color:var(--accent2);text-decoration:none}
       </div>
     </div>
   </header>
-
   <div class="main-content" id="main-content">
-    <!-- Stats -->
     <div class="stats-row" id="stats-row"></div>
-
-    <!-- Filters -->
-    <div class="filter-pills" id="filter-pills">
+    <div class="filter-pills">
       <button class="filter-pill active" data-filter="all" onclick="setFilter('all')">Tutte</button>
       <button class="filter-pill" data-filter="voting" onclick="setFilter('voting')">🗳 In votazione</button>
       <button class="filter-pill" data-filter="approved" onclick="setFilter('approved')">✅ Approvate</button>
       <button class="filter-pill" data-filter="rejected" onclick="setFilter('rejected')">❌ Scartate</button>
     </div>
-
-    <!-- Proposals -->
-    <div id="proposals-list"></div>
+    <div id="proposals-list"><div class="loading-spinner">Caricamento...</div></div>
   </div>
-
-  <!-- FAB -->
   <button class="fab" onclick="openCreateModal()">+</button>
-
-  <!-- Bottom Nav -->
   <nav class="bottom-nav">
-    <button class="nav-item active" onclick="navTo('home')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      Home
-    </button>
-    <button class="nav-item" onclick="navTo('approved')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-      Approvate
-    </button>
-    <button class="nav-item" onclick="navTo('privacy')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      Privacy
-    </button>
+    <button class="nav-item active" onclick="navTo('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</button>
+    <button class="nav-item" onclick="navTo('approved')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Approvate</button>
+    <button class="nav-item" onclick="navTo('privacy')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Privacy</button>
   </nav>
 </div>
-
-<!-- ==================== PRIVACY PAGE ==================== -->
 <div id="page-privacy" class="page">
   <div class="privacy-content fade-in">
     <button class="back-link" onclick="showPage('page-app')">← Torna alla home</button>
     <h1>🔒 Privacy</h1>
-    <p>Anarchia Planner è un'app statica pensata per un gruppo ristretto di amici. Ecco come gestiamo i tuoi dati.</p>
+    <p>Anarchia Planner è un'app pensata per un gruppo ristretto di amici.</p>
     <h2>Dove finiscono i dati?</h2>
-    <p>Tutti i dati (nome, foto, proposte, voti) restano esclusivamente nel browser del tuo dispositivo, salvati in <strong>localStorage</strong>. Nessun server, nessun database esterno, nessun tracking.</p>
+    <p>Le proposte e i voti vengono salvati su <strong>Firebase</strong> (Google Cloud) per la sincronizzazione in tempo reale tra tutti i membri. Il tuo profilo (nome e foto) resta salvato solo nel tuo browser.</p>
     <h2>Chi può vedere cosa?</h2>
-    <p>Solo chi usa lo stesso browser sullo stesso dispositivo può vedere i tuoi dati. Se condividi il link dell'app, ogni persona avrà il proprio spazio dati locale. Per sincronizzare, tutti devono operare sullo stesso dispositivo o copiare manualmente i dati.</p>
-    <h2>Come cancello tutto?</h2>
-    <p>Puoi cancellare tutti i dati in qualsiasi momento: basta svuotare i dati del sito dal browser, oppure premere il pulsante qui sotto.</p>
-    <button class="btn-primary" style="background:var(--red);max-width:280px;margin:20px auto;display:flex" onclick="clearAllData()">🗑 Cancella tutti i dati</button>
+    <p>Solo chi conosce il codice segreto del gruppo può accedere. Proposte, voti e sondaggi sono condivisi tra tutti i membri.</p>
+    <h2>Come cancello i miei dati?</h2>
+    <p>Puoi cancellare il tuo profilo locale con il pulsante qui sotto. Le proposte che hai creato resteranno visibili al gruppo.</p>
+    <button class="btn-primary" style="background:var(--red);max-width:280px;margin:20px auto;display:flex" onclick="clearLocalData()">🗑 Esci e cancella profilo</button>
     <h2>Cookie e tracciamento</h2>
-    <p>Zero cookie. Zero analytics. Zero tracciamento. Solo localStorage per far funzionare l'app.</p>
-    <h2>Codice sorgente</h2>
-    <p>L'app è un singolo file HTML. Puoi ispezionare tutto il codice sorgente in qualsiasi momento: è completamente trasparente.</p>
+    <p>Zero cookie di profilazione. Zero analytics. Solo Firebase per i dati condivisi e localStorage per il tuo profilo.</p>
     <p style="margin-top:32px;color:var(--text3);font-size:.78rem;text-align:center">Anarchia Planner — fatto con ❤️ per gli amici</p>
   </div>
 </div>
-
-<!-- ==================== CREATE PROPOSAL MODAL ==================== -->
 <div class="modal-overlay" id="modal-create">
   <div class="modal">
     <div class="modal-handle"></div>
     <div class="modal-title" id="create-modal-title">✨ Nuova proposta</div>
-    <div class="form-group">
-      <label class="form-label">Nome del locale *</label>
-      <input id="create-name" placeholder="Es: Trattoria da Mario">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Data proposta</label>
-      <input id="create-date" type="date">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Descrizione</label>
-      <textarea id="create-desc" placeholder="Perché questo posto? Cosa c'è di speciale?"></textarea>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Link Google Maps</label>
-      <input id="create-maps" placeholder="https://maps.google.com/...">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Link Instagram</label>
-      <input id="create-insta" placeholder="https://instagram.com/...">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Immagine anteprima</label>
-      <div class="img-upload-area" id="create-img-area" onclick="document.getElementById('create-img-input').click()">
-        <div class="upload-icon">🖼</div>
-        <span>Tocca per caricare un'immagine</span>
-      </div>
-      <input type="file" id="create-img-input" accept="image/*" hidden>
-    </div>
+    <div class="form-group"><label class="form-label">Nome del locale *</label><input id="create-name" placeholder="Es: Trattoria da Mario"></div>
+    <div class="form-group"><label class="form-label">Data proposta</label><input id="create-date" type="date"></div>
+    <div class="form-group"><label class="form-label">Descrizione</label><textarea id="create-desc" placeholder="Perché questo posto? Cosa c'è di speciale?"></textarea></div>
+    <div class="form-group"><label class="form-label">Link Google Maps</label><input id="create-maps" placeholder="https://maps.google.com/..."></div>
+    <div class="form-group"><label class="form-label">Link Instagram</label><input id="create-insta" placeholder="https://instagram.com/..."></div>
+    <div class="form-group"><label class="form-label">Immagine anteprima</label><div class="img-upload-area" id="create-img-area" onclick="document.getElementById('create-img-input').click()"><div class="upload-icon">🖼</div><span>Tocca per caricare un'immagine</span></div><input type="file" id="create-img-input" accept="image/*" hidden></div>
     <div class="error-msg" id="create-error"></div>
-    <div style="display:flex;gap:10px;margin-top:8px">
-      <button class="btn-secondary" style="flex:1" onclick="closeModal('modal-create')">Annulla</button>
-      <button class="btn-primary" style="flex:1" id="create-submit-btn" onclick="submitProposal()">Pubblica</button>
-    </div>
+    <div style="display:flex;gap:10px;margin-top:8px"><button class="btn-secondary" style="flex:1" onclick="closeModal('modal-create')">Annulla</button><button class="btn-primary" style="flex:1" id="create-submit-btn" onclick="submitProposal()">Pubblica</button></div>
   </div>
 </div>
-
-<!-- ==================== DATE POLL MODAL ==================== -->
 <div class="modal-overlay" id="modal-datepoll">
   <div class="modal date-poll-modal">
     <div class="modal-handle"></div>
     <div class="modal-title" id="datepoll-title">📅 Sondaggio date</div>
-    <div id="datepoll-creator-section" class="hidden">
-      <div class="add-date-row">
-        <input id="datepoll-new-date" type="date">
-        <button class="btn-primary btn-sm" onclick="addDateOption()">+ Aggiungi</button>
-      </div>
-    </div>
+    <div id="datepoll-creator-section" class="hidden"><div class="add-date-row"><input id="datepoll-new-date" type="date"><button class="btn-primary btn-sm" onclick="addDateOption()">+ Aggiungi</button></div></div>
     <div id="datepoll-dates-list"></div>
     <div id="datepoll-best" style="margin-top:12px;font-size:.88rem;font-weight:600;color:var(--green);text-align:center"></div>
     <button class="btn-secondary" style="width:100%;margin-top:16px" onclick="closeModal('modal-datepoll')">Chiudi</button>
   </div>
 </div>
-
-<!-- ==================== TOAST ==================== -->
 <div class="toast hidden" id="toast"></div>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
-/* ========================================================
-   ANARCHIA PLANNER — Complete JS Logic
-   ======================================================== */
+firebase.initializeApp({apiKey:"AIzaSyC0EpOBAC_gZiWXdjO5kelE1c1U1FUvnfI",authDomain:"anarchia-planner.firebaseapp.com",projectId:"anarchia-planner",storageBucket:"anarchia-planner.firebasestorage.app",messagingSenderId:"435944424604",appId:"1:435944424604:web:51b6b4941c0da758259959"});
+const db=firebase.firestore(),proposalsRef=db.collection('proposals');
 
-// ===== DATA HELPERS =====
-const LS = {
-  get(k) { try { return JSON.parse(localStorage.getItem('anarchia_' + k)); } catch { return null; } },
-  set(k, v) { localStorage.setItem('anarchia_' + k, JSON.stringify(v)); },
-  remove(k) { localStorage.removeItem('anarchia_' + k); }
-};
+const LS={get(k){try{return JSON.parse(localStorage.getItem('anarchia_'+k))}catch{return null}},set(k,v){localStorage.setItem('anarchia_'+k,JSON.stringify(v))},remove(k){localStorage.removeItem('anarchia_'+k)}};
+function genId(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function getUser(){return LS.get('user')}
+const SECRET_CODE='anarchia2025',THRESHOLD=0.7;
+let allProposals=[];
 
-function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
-
-function getUser() { return LS.get('user'); }
-function getProposals() { return LS.get('proposals') || []; }
-function saveProposals(p) { LS.set('proposals', p); }
-
-const SECRET_CODE = 'anarchia2025';
-const THRESHOLD = 0.7;
-
-// ===== AVATAR GENERATION =====
-const COLORS = ['#e85d4a','#3dd68c','#fbbf24','#60a5fa','#a78bfa','#f472b6','#34d399','#fb923c'];
-function avatarColor(name) { let h = 0; for (let i = 0; i < name.length; i++) h = name.charCodeAt(i) + ((h << 5) - h); return COLORS[Math.abs(h) % COLORS.length]; }
-function avatarInitial(name) { return (name || '?')[0].toUpperCase(); }
-
-function makeAvatarHTML(name, photo, size = 32) {
-  if (photo) return `<img src="${photo}" style="width:${size}px;height:${size}px;border-radius:50%;object-fit:cover" alt="">`;
-  const c = avatarColor(name);
-  const fs = Math.round(size * 0.42);
-  return `<div style="width:${size}px;height:${size}px;border-radius:50%;background:${c};display:flex;align-items:center;justify-content:center;font-size:${fs}px;font-weight:700;color:#fff;flex-shrink:0">${avatarInitial(name)}</div>`;
+const COLORS=['#e85d4a','#3dd68c','#fbbf24','#60a5fa','#a78bfa','#f472b6','#34d399','#fb923c'];
+function avatarColor(n){let h=0;for(let i=0;i<n.length;i++)h=n.charCodeAt(i)+((h<<5)-h);return COLORS[Math.abs(h)%COLORS.length]}
+function makeAvatarHTML(name,photo,size=32){
+  if(photo)return '<img src="'+photo+'" style="width:'+size+'px;height:'+size+'px;border-radius:50%;object-fit:cover;flex-shrink:0" alt="">';
+  return '<div style="width:'+size+'px;height:'+size+'px;border-radius:50%;background:'+avatarColor(name)+';display:flex;align-items:center;justify-content:center;font-size:'+Math.round(size*.42)+'px;font-weight:700;color:#fff;flex-shrink:0">'+(name||'?')[0].toUpperCase()+'</div>';
 }
 
-// ===== TOAST =====
-function toast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.remove('hidden');
-  setTimeout(() => t.classList.add('hidden'), 2200);
-}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.remove('hidden');setTimeout(()=>t.classList.add('hidden'),2200)}
+function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');if(id==='page-app')renderApp()}
 
-// ===== PAGE NAV =====
-function showPage(id) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  if (id === 'page-app') renderApp();
-}
-
-// ===== ONBOARDING =====
-let tempAvatar = null;
-document.getElementById('avatar-input').addEventListener('change', function(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(ev) {
-    tempAvatar = ev.target.result;
-    const preview = document.getElementById('onboard-avatar-preview');
-    preview.innerHTML = '';
-    preview.style.padding = '0';
-    const img = document.createElement('img');
-    img.src = tempAvatar;
-    img.style.cssText = 'width:100px;height:100px;border-radius:50%;object-fit:cover';
-    preview.replaceWith(img);
-    img.id = 'onboard-avatar-preview';
-  };
+let tempAvatar=null;
+document.getElementById('avatar-input').addEventListener('change',function(e){
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(ev){tempAvatar=ev.target.result;const img=document.createElement('img');img.src=tempAvatar;img.style.cssText='width:100px;height:100px;border-radius:50%;object-fit:cover';img.id='onboard-avatar-preview';document.getElementById('onboard-avatar-preview').replaceWith(img)};
   reader.readAsDataURL(file);
 });
-
-function submitOnboarding() {
-  const name = document.getElementById('onboard-name').value.trim();
-  if (!name) { document.getElementById('onboard-error').textContent = 'Inserisci il tuo nome'; return; }
-  LS.set('user', { name, photo: tempAvatar || null, id: genId() });
-  if (LS.get('access_ok')) { showPage('page-app'); }
-  else { showPage('page-access'); }
+function submitOnboarding(){
+  const name=document.getElementById('onboard-name').value.trim();
+  if(!name){document.getElementById('onboard-error').textContent='Inserisci il tuo nome';return}
+  LS.set('user',{name,photo:tempAvatar||null,id:genId()});
+  LS.get('access_ok')?showPage('page-app'):showPage('page-access');
+}
+function submitAccess(){
+  const code=document.getElementById('access-input').value.trim().toLowerCase();
+  if(code!==SECRET_CODE){document.getElementById('access-error').textContent='Codice errato. Riprova!';return}
+  LS.set('access_ok',true);showPage('page-app');startRealtimeListener();toast('Benvenuto nel gruppo! 🎉');
+}
+function initApp(){
+  const user=getUser();
+  if(!user){showPage('page-onboarding');return}
+  if(!LS.get('access_ok')){showPage('page-access');return}
+  showPage('page-app');startRealtimeListener();
 }
 
-function submitAccess() {
-  const code = document.getElementById('access-input').value.trim().toLowerCase();
-  if (code !== SECRET_CODE) { document.getElementById('access-error').textContent = 'Codice errato. Riprova!'; return; }
-  LS.set('access_ok', true);
-  showPage('page-app');
-  toast('Benvenuto nel gruppo! 🎉');
+let unsubscribe=null;
+function startRealtimeListener(){
+  if(unsubscribe)return;
+  unsubscribe=proposalsRef.orderBy('created','desc').onSnapshot(snap=>{
+    allProposals=snap.docs.map(doc=>({id:doc.id,...doc.data()}));
+    renderStats();renderProposals();
+    if(currentPollId&&document.getElementById('modal-datepoll').classList.contains('open'))renderDatePoll();
+  },err=>{console.error(err);document.getElementById('proposals-list').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div><p>Errore di connessione. Ricarica.</p></div>'});
 }
 
-// ===== APP INIT =====
-function initApp() {
-  const user = getUser();
-  if (!user) { showPage('page-onboarding'); return; }
-  if (!LS.get('access_ok')) { showPage('page-access'); return; }
-  showPage('page-app');
+let currentFilter='all';
+function setFilter(f){currentFilter=f;document.querySelectorAll('.filter-pill').forEach(p=>p.classList.toggle('active',p.dataset.filter===f));renderProposals()}
+function navTo(t){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));event.currentTarget.classList.add('active');
+  if(t==='privacy'){showPage('page-privacy');return}
+  currentFilter=t==='approved'?'approved':'all';
+  document.querySelectorAll('.filter-pill').forEach(p=>p.classList.toggle('active',p.dataset.filter===currentFilter));
+  showPage('page-app');renderProposals();
+}
+function renderApp(){
+  const u=getUser();if(!u)return;
+  document.getElementById('header-username').textContent=u.name;
+  document.getElementById('header-avatar-slot').innerHTML=makeAvatarHTML(u.name,u.photo,32);
+  renderStats();renderProposals();
+}
+function getStatus(p){
+  if(p.forceApproved)return'approved';
+  const v=p.votes||{},vk=Object.keys(v);if(vk.length<2)return'voting';
+  const y=vk.filter(k=>v[k]==='yes').length,n=vk.filter(k=>v[k]==='no').length,t=vk.length;
+  if(y/t>=THRESHOLD)return'approved';if(n/t>(1-THRESHOLD))return'rejected';return'voting';
+}
+function getConsent(p){const v=p.votes||{},vk=Object.keys(v);if(!vk.length)return 0;const y=vk.filter(k=>v[k]==='yes').length,m=vk.filter(k=>v[k]==='maybe').length;return Math.round(((y+m*.5)/vk.length)*100)}
+function getConfirmed(p){const v=p.votes||{},pa=p.participants||{},ids=new Set;Object.keys(v).forEach(k=>{if(v[k]==='yes')ids.add(k)});Object.keys(pa).forEach(k=>ids.add(k));return[...ids]}
+
+function renderStats(){
+  const t=allProposals.length,a=allProposals.filter(p=>getStatus(p)==='approved').length,v=allProposals.filter(p=>getStatus(p)==='voting').length;
+  document.getElementById('stats-row').innerHTML='<div class="stat-card"><div class="stat-num accent">'+t+'</div><div class="stat-label">Proposte</div></div><div class="stat-card"><div class="stat-num green">'+a+'</div><div class="stat-label">Approvate</div></div><div class="stat-card"><div class="stat-num yellow">'+v+'</div><div class="stat-label">In votazione</div></div>';
 }
 
-// ===== RENDER =====
-let currentFilter = 'all';
+function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
+function fmtDate(d){if(!d)return'';const p=d.split('-');return p.length===3?p[2]+'/'+p[1]+'/'+p[0]:d}
 
-function setFilter(f) {
-  currentFilter = f;
-  document.querySelectorAll('.filter-pill').forEach(p => p.classList.toggle('active', p.dataset.filter === f));
-  renderProposals();
-}
+function renderProposals(){
+  const u=getUser();if(!u)return;
+  let list=[...allProposals];
+  if(currentFilter!=='all')list=list.filter(p=>getStatus(p)===currentFilter);
+  const el=document.getElementById('proposals-list');
+  if(!list.length){el.innerHTML='<div class="empty-state fade-in"><div class="empty-icon">🍽</div><p>'+(currentFilter==='all'?'Nessuna proposta ancora.<br>Crea la prima!':'Nessuna proposta in questa categoria.')+'</p></div>';return}
+  const ord={voting:0,approved:1,rejected:2};
+  list.sort((a,b)=>{const sa=ord[getStatus(a)]??1,sb=ord[getStatus(b)]??1;return sa!==sb?sa-sb:(b.created||0)-(a.created||0)});
 
-function navTo(target) {
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  if (target === 'home') {
-    currentFilter = 'all';
-    event.currentTarget.classList.add('active');
-    document.querySelectorAll('.filter-pill').forEach(p => p.classList.toggle('active', p.dataset.filter === 'all'));
-    showPage('page-app');
-  } else if (target === 'approved') {
-    currentFilter = 'approved';
-    event.currentTarget.classList.add('active');
-    document.querySelectorAll('.filter-pill').forEach(p => p.classList.toggle('active', p.dataset.filter === 'approved'));
-    showPage('page-app');
-    renderProposals();
-  } else if (target === 'privacy') {
-    event.currentTarget.classList.add('active');
-    showPage('page-privacy');
-  }
-}
+  el.innerHTML=list.map(p=>{
+    const st=getStatus(p),con=getConsent(p),v=p.votes||{},vk=Object.keys(v);
+    const yC=vk.filter(k=>v[k]==='yes').length,mC=vk.filter(k=>v[k]==='maybe').length,nC=vk.filter(k=>v[k]==='no').length;
+    const uv=v[u.id]||null,bc=con>=70?'var(--green)':con>=40?'var(--yellow)':'var(--red)';
+    const bCls=st==='approved'?'badge-approved':st==='rejected'?'badge-rejected':'badge-voting';
+    const bTxt=st==='approved'?'✅ Approvata':st==='rejected'?'❌ Scartata':'🗳 In votazione';
+    const img=p.image?'<div class="card-img"><img src="'+p.image+'" loading="lazy"></div>':'<div class="card-img">🍽</div>';
+    let links='';
+    if(p.maps)links+='<a class="card-link" href="'+p.maps+'" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Maps</a>';
+    if(p.insta)links+='<a class="card-link" href="'+p.insta+'" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/></svg>Instagram</a>';
+    const avs=vk.slice(0,5).map(vid=>makeAvatarHTML(p.voterNames?.[vid]||'?',p.voterPhotos?.[vid]||null,26)).join('');
+    const extra=vk.length>5?'<div style="width:26px;height:26px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;margin-left:-8px;border:2px solid var(--surface)">+'+(vk.length-5)+'</div>':'';
+    const isCr=p.authorId===u.id,vDis=st!=='voting';
+    const faBtn=(st==='voting'&&isCr&&yC>=1)?'<button class="force-approve-btn" onclick="forceApprove(\''+p.id+'\')">✅ Approva con '+yC+' conferma'+(yC>1?'e':'')+'</button>':'';
+    const conf=st==='approved'?getConfirmed(p):[];
+    let partHTML='';
+    if(st==='approved'&&conf.length){
+      partHTML='<div class="participants-wrap"><div class="participants-label">👥 Partecipanti confermati ('+conf.length+')</div><div class="participants-list">'+conf.map(vid=>{
+        const vn=p.voterNames?.[vid]||p.participants?.[vid]?.name||'?';const vp=p.voterPhotos?.[vid]||p.participants?.[vid]?.photo||null;
+        return'<div class="participant-chip">'+makeAvatarHTML(vn,vp,20)+' '+esc(vn)+'</div>';
+      }).join('')+'</div></div>';
+    }
+    const joinBtn=(st==='approved'&&!conf.includes(u.id))?'<button class="join-btn" onclick="joinProposal(\''+p.id+'\')">🙋 Partecipo anch\'io!</button>':'';
+    const dpBtn=st==='approved'?'<button class="date-poll-btn" onclick="openDatePoll(\''+p.id+'\')">📅 Sondaggio date</button>':'';
 
-function renderApp() {
-  const user = getUser();
-  if (!user) return;
-  document.getElementById('header-username').textContent = user.name;
-  document.getElementById('header-avatar-slot').innerHTML = makeAvatarHTML(user.name, user.photo, 32);
-  renderStats();
-  renderProposals();
-}
-
-function renderStats() {
-  const proposals = getProposals();
-  const total = proposals.length;
-  const approved = proposals.filter(p => getStatus(p) === 'approved').length;
-  const voting = proposals.filter(p => getStatus(p) === 'voting').length;
-  document.getElementById('stats-row').innerHTML = `
-    <div class="stat-card"><div class="stat-num accent">${total}</div><div class="stat-label">Proposte</div></div>
-    <div class="stat-card"><div class="stat-num green">${approved}</div><div class="stat-label">Approvate</div></div>
-    <div class="stat-card"><div class="stat-num yellow">${voting}</div><div class="stat-label">In votazione</div></div>
-  `;
-}
-
-function getStatus(p) {
-  if (p.forceApproved) return 'approved';
-  const votes = p.votes || {};
-  const voters = Object.keys(votes);
-  if (voters.length < 2) return 'voting';
-  const yesCount = voters.filter(v => votes[v] === 'yes').length;
-  const noCount = voters.filter(v => votes[v] === 'no').length;
-  const total = voters.length;
-  if (yesCount / total >= THRESHOLD) return 'approved';
-  if (noCount / total > (1 - THRESHOLD)) return 'rejected';
-  return 'voting';
-}
-
-function getConsentPercent(p) {
-  const votes = p.votes || {};
-  const voters = Object.keys(votes);
-  if (voters.length === 0) return 0;
-  const yes = voters.filter(v => votes[v] === 'yes').length;
-  const maybe = voters.filter(v => votes[v] === 'maybe').length;
-  return Math.round(((yes + maybe * 0.5) / voters.length) * 100);
-}
-
-function renderProposals() {
-  const user = getUser();
-  let proposals = getProposals();
-  if (currentFilter !== 'all') {
-    proposals = proposals.filter(p => getStatus(p) === currentFilter);
-  }
-  const list = document.getElementById('proposals-list');
-
-  if (proposals.length === 0) {
-    list.innerHTML = `<div class="empty-state fade-in">
-      <div class="empty-icon">🍽</div>
-      <p>${currentFilter === 'all' ? 'Nessuna proposta ancora.<br>Crea la prima!' : 'Nessuna proposta in questa categoria.'}</p>
-    </div>`;
-    return;
-  }
-
-  // Sort: voting first, then approved, then rejected, newest first within each
-  const order = { voting: 0, approved: 1, rejected: 2 };
-  proposals.sort((a, b) => {
-    const sa = order[getStatus(a)] ?? 1, sb = order[getStatus(b)] ?? 1;
-    if (sa !== sb) return sa - sb;
-    return (b.created || 0) - (a.created || 0);
-  });
-
-  list.innerHTML = proposals.map(p => {
-    const status = getStatus(p);
-    const consent = getConsentPercent(p);
-    const votes = p.votes || {};
-    const voters = Object.keys(votes);
-    const yesC = voters.filter(v => votes[v] === 'yes').length;
-    const maybeC = voters.filter(v => votes[v] === 'maybe').length;
-    const noC = voters.filter(v => votes[v] === 'no').length;
-    const userVote = votes[user.id] || null;
-    const barColor = consent >= 70 ? 'var(--green)' : consent >= 40 ? 'var(--yellow)' : 'var(--red)';
-
-    const badgeClass = status === 'approved' ? 'badge-approved' : status === 'rejected' ? 'badge-rejected' : 'badge-voting';
-    const badgeText = status === 'approved' ? '✅ Approvata' : status === 'rejected' ? '❌ Scartata' : '🗳 In votazione';
-
-    const imgHTML = p.image
-      ? `<div class="card-img"><img src="${p.image}" alt="${p.name}" loading="lazy"></div>`
-      : `<div class="card-img">🍽</div>`;
-
-    const linksHTML = [];
-    if (p.maps) linksHTML.push(`<a class="card-link" href="${p.maps}" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Maps</a>`);
-    if (p.insta) linksHTML.push(`<a class="card-link" href="${p.insta}" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>Instagram</a>`);
-
-    // Voter avatars
-    const voterAvatars = voters.slice(0, 5).map(vid => {
-      const vn = p.voterNames?.[vid] || '?';
-      const vp = p.voterPhotos?.[vid] || null;
-      return makeAvatarHTML(vn, vp, 26);
-    }).join('');
-    const extraVoters = voters.length > 5 ? `<div style="width:26px;height:26px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;margin-left:-8px;border:2px solid var(--surface)">+${voters.length - 5}</div>` : '';
-
-    const datePollBtn = status === 'approved'
-      ? `<button class="date-poll-btn" onclick="openDatePoll('${p.id}')">📅 Sondaggio date</button>`
-      : '';
-
-    const voteDisabled = status !== 'voting';
-
-    // Force-approve button: visible to creator when voting and at least 1 yes
-    const isCreator = p.authorId === user.id;
-    const forceApproveBtn = (status === 'voting' && isCreator && yesC >= 1)
-      ? `<button class="force-approve-btn" onclick="forceApprove('${p.id}')">✅ Approva con ${yesC} conferma${yesC > 1 ? 'e' : ''}</button>`
-      : '';
-
-    // Participants list for approved proposals
-    const confirmedIds = status === 'approved' ? getConfirmedParticipants(p) : [];
-    const participantsHTML = (status === 'approved' && confirmedIds.length > 0) ? `
-      <div class="participants-wrap">
-        <div class="participants-label">👥 Partecipanti confermati (${confirmedIds.length})</div>
-        <div class="participants-list">
-          ${confirmedIds.map(vid => {
-            const vn = p.voterNames?.[vid] || (p.participants?.[vid]?.name) || '?';
-            const vp = p.voterPhotos?.[vid] || (p.participants?.[vid]?.photo) || null;
-            return `<div class="participant-chip">${makeAvatarHTML(vn, vp, 20)} ${esc(vn)}</div>`;
-          }).join('')}
-        </div>
-      </div>` : '';
-
-    // Join button: for approved proposals, if user hasn't said yes and isn't already a participant
-    const userIsParticipant = confirmedIds.includes(user.id);
-    const joinBtn = (status === 'approved' && !userIsParticipant)
-      ? `<button class="join-btn" onclick="joinProposal('${p.id}')">🙋 Partecipo anch'io!</button>`
-      : '';
-
-    return `<div class="card fade-in">
-      ${imgHTML}
-      <div class="card-body">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-          <span class="badge ${badgeClass}">${badgeText}</span>
-          ${p.date ? `<span style="font-size:.75rem;color:var(--text3)">📅 ${formatDate(p.date)}</span>` : ''}
-        </div>
-        <div class="card-name">${esc(p.name)}</div>
-        ${p.desc ? `<div class="card-desc">${esc(p.desc)}</div>` : ''}
-        ${linksHTML.length ? `<div class="card-links">${linksHTML.join('')}</div>` : ''}
-        <div class="card-votes">
-          <div class="vote-group yes">👍 ${yesC}</div>
-          <div class="vote-group maybe">🤔 ${maybeC}</div>
-          <div class="vote-group no">👎 ${noC}</div>
-        </div>
-        <div class="consent-bar-wrap">
-          <div class="consent-bar-label"><span>Consenso</span><span>${consent}%</span></div>
-          <div class="consent-bar">
-            <div class="consent-bar-fill" style="width:${consent}%;background:${barColor}"></div>
-            <div class="consent-bar-threshold" style="left:70%"></div>
-          </div>
-        </div>
-        ${voters.length ? `<div class="card-avatars" style="margin-bottom:12px">${voterAvatars}${extraVoters}</div>` : ''}
-        ${!voteDisabled ? `<div class="card-actions">
-          <button class="vote-btn ${userVote === 'yes' ? 'voted voted-yes' : ''}" onclick="vote('${p.id}','yes')">👍 Sì</button>
-          <button class="vote-btn ${userVote === 'maybe' ? 'voted voted-maybe' : ''}" onclick="vote('${p.id}','maybe')">🤔 Forse</button>
-          <button class="vote-btn ${userVote === 'no' ? 'voted voted-no' : ''}" onclick="vote('${p.id}','no')">👎 No</button>
-        </div>` : ''}
-        ${forceApproveBtn}
-        ${participantsHTML}
-        ${joinBtn}
-        ${datePollBtn}
-        ${isCreator ? `<div class="card-owner-actions">
-          <button class="card-owner-btn" onclick="openEditModal('${p.id}')">✏️ Modifica</button>
-          <button class="card-owner-btn delete-btn" onclick="deleteProposal('${p.id}')">🗑 Elimina</button>
-        </div>` : ''}
-        <div style="margin-top:10px;font-size:.72rem;color:var(--text3)">Proposto da ${esc(p.authorName || 'Anonimo')}</div>
-      </div>
-    </div>`;
+    return'<div class="card fade-in">'+img+'<div class="card-body"><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span class="badge '+bCls+'">'+bTxt+'</span>'+(p.date?'<span style="font-size:.75rem;color:var(--text3)">📅 '+fmtDate(p.date)+'</span>':'')+'</div><div class="card-name">'+esc(p.name)+'</div>'+(p.desc?'<div class="card-desc">'+esc(p.desc)+'</div>':'')+(links?'<div class="card-links">'+links+'</div>':'')+'<div class="card-votes"><div class="vote-group yes">👍 '+yC+'</div><div class="vote-group maybe">🤔 '+mC+'</div><div class="vote-group no">👎 '+nC+'</div></div><div class="consent-bar-wrap"><div class="consent-bar-label"><span>Consenso</span><span>'+con+'%</span></div><div class="consent-bar"><div class="consent-bar-fill" style="width:'+con+'%;background:'+bc+'"></div><div class="consent-bar-threshold" style="left:70%"></div></div></div>'+(vk.length?'<div class="card-avatars">'+avs+extra+'</div>':'')+(!vDis?'<div class="card-actions"><button class="vote-btn '+(uv==='yes'?'voted-yes':'')+'" onclick="vote(\''+p.id+'\',\'yes\')">👍 Sì</button><button class="vote-btn '+(uv==='maybe'?'voted-maybe':'')+'" onclick="vote(\''+p.id+'\',\'maybe\')">🤔 Forse</button><button class="vote-btn '+(uv==='no'?'voted-no':'')+'" onclick="vote(\''+p.id+'\',\'no\')">👎 No</button></div>':'')+faBtn+partHTML+joinBtn+dpBtn+(isCr?'<div class="card-owner-actions"><button class="card-owner-btn" onclick="openEditModal(\''+p.id+'\')">✏️ Modifica</button><button class="card-owner-btn delete-btn" onclick="deleteProposal(\''+p.id+'\')">🗑 Elimina</button></div>':'')+'<div style="margin-top:10px;font-size:.72rem;color:var(--text3)">Proposto da '+esc(p.authorName||'Anonimo')+'</div></div></div>';
   }).join('');
 }
 
-function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
-
-function formatDate(d) {
-  if (!d) return '';
-  const parts = d.split('-');
-  if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
-  return d;
+async function vote(id,val){
+  const u=getUser(),p=allProposals.find(x=>x.id===id);if(!p)return;
+  const v={...(p.votes||{})},vn={...(p.voterNames||{})},vp={...(p.voterPhotos||{})};
+  if(v[u.id]===val){delete v[u.id];delete vn[u.id];delete vp[u.id]}
+  else{v[u.id]=val;vn[u.id]=u.name;vp[u.id]=u.photo||null}
+  await proposalsRef.doc(id).update({votes:v,voterNames:vn,voterPhotos:vp});
+}
+async function forceApprove(id){
+  const p=allProposals.find(x=>x.id===id);if(!p)return;
+  const yC=Object.values(p.votes||{}).filter(v=>v==='yes').length;
+  if(!confirm('Vuoi approvare con '+yC+' conferma'+(yC>1?'e':'')+'?'))return;
+  await proposalsRef.doc(id).update({forceApproved:true});toast('🎉 Proposta approvata!');
+}
+async function joinProposal(id){
+  const u=getUser(),p=allProposals.find(x=>x.id===id);if(!p)return;
+  const v={...(p.votes||{})},vn={...(p.voterNames||{})},vp={...(p.voterPhotos||{})},pa={...(p.participants||{})};
+  v[u.id]='yes';vn[u.id]=u.name;vp[u.id]=u.photo||null;pa[u.id]={name:u.name,photo:u.photo||null};
+  await proposalsRef.doc(id).update({votes:v,voterNames:vn,voterPhotos:vp,participants:pa});toast('🙌 Ti sei aggiunto!');
 }
 
-// ===== VOTING =====
-function vote(proposalId, value) {
-  const user = getUser();
-  const proposals = getProposals();
-  const p = proposals.find(x => x.id === proposalId);
-  if (!p) return;
-  if (!p.votes) p.votes = {};
-  if (!p.voterNames) p.voterNames = {};
-  if (!p.voterPhotos) p.voterPhotos = {};
-
-  // Toggle off if same vote
-  if (p.votes[user.id] === value) {
-    delete p.votes[user.id];
-    delete p.voterNames[user.id];
-    delete p.voterPhotos[user.id];
-  } else {
-    p.votes[user.id] = value;
-    p.voterNames[user.id] = user.name;
-    p.voterPhotos[user.id] = user.photo;
-  }
-
-  saveProposals(proposals);
-  renderStats();
-  renderProposals();
-
-  const status = getStatus(p);
-  if (status === 'approved') toast('🎉 Proposta approvata!');
-  else if (status === 'rejected') toast('Proposta scartata');
-}
-
-// ===== CREATE / EDIT PROPOSAL =====
-let tempProposalImg = null;
-let editingId = null;
-
-document.getElementById('create-img-input').addEventListener('change', function(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(ev) {
-    tempProposalImg = ev.target.result;
-    const area = document.getElementById('create-img-area');
-    area.innerHTML = `<img src="${tempProposalImg}" alt="preview">`;
-  };
-  reader.readAsDataURL(file);
+let tempProposalImg=null,editingId=null;
+document.getElementById('create-img-input').addEventListener('change',function(e){
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();reader.onload=function(ev){
+    const img=new Image();img.onload=function(){
+      const c=document.createElement('canvas'),MAX=600;let w=img.width,h=img.height;
+      if(w>MAX||h>MAX){if(w>h){h=Math.round(h*MAX/w);w=MAX}else{w=Math.round(w*MAX/h);h=MAX}}
+      c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);
+      tempProposalImg=c.toDataURL('image/jpeg',0.7);
+      document.getElementById('create-img-area').innerHTML='<img src="'+tempProposalImg+'">';
+    };img.src=ev.target.result;
+  };reader.readAsDataURL(file);
 });
-
-function openCreateModal() {
-  editingId = null;
-  document.getElementById('create-modal-title').textContent = '✨ Nuova proposta';
-  document.getElementById('create-submit-btn').textContent = 'Pubblica';
-  document.getElementById('create-name').value = '';
-  document.getElementById('create-date').value = '';
-  document.getElementById('create-desc').value = '';
-  document.getElementById('create-maps').value = '';
-  document.getElementById('create-insta').value = '';
-  document.getElementById('create-error').textContent = '';
-  tempProposalImg = null;
-  document.getElementById('create-img-area').innerHTML = '<div class="upload-icon">🖼</div><span>Tocca per caricare un\'immagine</span>';
+function openCreateModal(){
+  editingId=null;document.getElementById('create-modal-title').textContent='✨ Nuova proposta';
+  document.getElementById('create-submit-btn').textContent='Pubblica';
+  ['create-name','create-date','create-desc','create-maps','create-insta'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('create-error').textContent='';tempProposalImg=null;
+  document.getElementById('create-img-area').innerHTML='<div class="upload-icon">🖼</div><span>Tocca per caricare</span>';
   document.getElementById('modal-create').classList.add('open');
 }
-
-function openEditModal(proposalId) {
-  const proposals = getProposals();
-  const p = proposals.find(x => x.id === proposalId);
-  if (!p) return;
-
-  editingId = proposalId;
-  document.getElementById('create-modal-title').textContent = '✏️ Modifica proposta';
-  document.getElementById('create-submit-btn').textContent = 'Salva modifiche';
-  document.getElementById('create-name').value = p.name || '';
-  document.getElementById('create-date').value = p.date || '';
-  document.getElementById('create-desc').value = p.desc || '';
-  document.getElementById('create-maps').value = p.maps || '';
-  document.getElementById('create-insta').value = p.insta || '';
-  document.getElementById('create-error').textContent = '';
-
-  tempProposalImg = p.image || null;
-  if (p.image) {
-    document.getElementById('create-img-area').innerHTML = `<img src="${p.image}" alt="preview">`;
-  } else {
-    document.getElementById('create-img-area').innerHTML = '<div class="upload-icon">🖼</div><span>Tocca per caricare un\'immagine</span>';
-  }
-
+function openEditModal(id){
+  const p=allProposals.find(x=>x.id===id);if(!p)return;editingId=id;
+  document.getElementById('create-modal-title').textContent='✏️ Modifica proposta';
+  document.getElementById('create-submit-btn').textContent='Salva modifiche';
+  document.getElementById('create-name').value=p.name||'';document.getElementById('create-date').value=p.date||'';
+  document.getElementById('create-desc').value=p.desc||'';document.getElementById('create-maps').value=p.maps||'';
+  document.getElementById('create-insta').value=p.insta||'';document.getElementById('create-error').textContent='';
+  tempProposalImg=p.image||null;
+  document.getElementById('create-img-area').innerHTML=p.image?'<img src="'+p.image+'">':'<div class="upload-icon">🖼</div><span>Tocca per caricare</span>';
   document.getElementById('modal-create').classList.add('open');
 }
+function closeModal(id){document.getElementById(id).classList.remove('open')}
 
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-
-function submitProposal() {
-  const name = document.getElementById('create-name').value.trim();
-  if (!name) { document.getElementById('create-error').textContent = 'Il nome del locale è obbligatorio'; return; }
-
-  const user = getUser();
-  const proposals = getProposals();
-
-  if (editingId) {
-    // === EDIT MODE ===
-    const p = proposals.find(x => x.id === editingId);
-    if (!p) return;
-    p.name = name;
-    p.date = document.getElementById('create-date').value || null;
-    p.desc = document.getElementById('create-desc').value.trim() || null;
-    p.maps = document.getElementById('create-maps').value.trim() || null;
-    p.insta = document.getElementById('create-insta').value.trim() || null;
-    p.image = tempProposalImg || null;
-    saveProposals(proposals);
+async function submitProposal(){
+  const name=document.getElementById('create-name').value.trim();
+  if(!name){document.getElementById('create-error').textContent='Il nome del locale è obbligatorio';return}
+  const btn=document.getElementById('create-submit-btn');btn.disabled=true;
+  const data={name,date:document.getElementById('create-date').value||null,desc:document.getElementById('create-desc').value.trim()||null,maps:document.getElementById('create-maps').value.trim()||null,insta:document.getElementById('create-insta').value.trim()||null,image:tempProposalImg||null};
+  try{
+    if(editingId){await proposalsRef.doc(editingId).update(data);editingId=null;toast('Proposta aggiornata ✅')}
+    else{const u=getUser();await proposalsRef.add({...data,authorId:u.id,authorName:u.name,votes:{},voterNames:{},voterPhotos:{},participants:{},datePoll:{dates:[],votes:{}},forceApproved:false,created:Date.now()});toast('Proposta creata! 🚀')}
     closeModal('modal-create');
-    editingId = null;
-    renderApp();
-    toast('Proposta aggiornata ✅');
-  } else {
-    // === CREATE MODE ===
-    const proposal = {
-      id: genId(),
-      name,
-      date: document.getElementById('create-date').value || null,
-      desc: document.getElementById('create-desc').value.trim() || null,
-      maps: document.getElementById('create-maps').value.trim() || null,
-      insta: document.getElementById('create-insta').value.trim() || null,
-      image: tempProposalImg || null,
-      authorId: user.id,
-      authorName: user.name,
-      votes: {},
-      voterNames: {},
-      voterPhotos: {},
-      datePoll: { dates: [], votes: {} },
-      created: Date.now()
-    };
-    proposals.unshift(proposal);
-    saveProposals(proposals);
-    closeModal('modal-create');
-    renderApp();
-    toast('Proposta creata! 🚀');
-  }
+  }catch(err){console.error(err);document.getElementById('create-error').textContent='Errore di rete. Riprova.'}
+  btn.disabled=false;
 }
 
-function deleteProposal(proposalId) {
-  if (!confirm('Sei sicuro di voler eliminare questa proposta? L\'azione è irreversibile.')) return;
-  let proposals = getProposals();
-  proposals = proposals.filter(p => p.id !== proposalId);
-  saveProposals(proposals);
-  renderApp();
-  toast('Proposta eliminata 🗑');
-}
+async function deleteProposal(id){if(!confirm('Sei sicuro di voler eliminare questa proposta?'))return;await proposalsRef.doc(id).delete();toast('Proposta eliminata 🗑')}
 
-// ===== FORCE APPROVE =====
-function forceApprove(proposalId) {
-  const proposals = getProposals();
-  const p = proposals.find(x => x.id === proposalId);
-  if (!p) return;
-  const votes = p.votes || {};
-  const yesC = Object.keys(votes).filter(v => votes[v] === 'yes').length;
-  if (!confirm(`Vuoi approvare questa proposta con ${yesC} conferma${yesC > 1 ? 'e' : ''}?`)) return;
-  p.forceApproved = true;
-  saveProposals(proposals);
-  renderApp();
-  toast('🎉 Proposta approvata dal creatore!');
-}
-
-// ===== JOIN APPROVED PROPOSAL =====
-function joinProposal(proposalId) {
-  const user = getUser();
-  const proposals = getProposals();
-  const p = proposals.find(x => x.id === proposalId);
-  if (!p) return;
-  if (!p.votes) p.votes = {};
-  if (!p.voterNames) p.voterNames = {};
-  if (!p.voterPhotos) p.voterPhotos = {};
-  if (!p.participants) p.participants = {};
-
-  // Set vote to yes and add as participant
-  p.votes[user.id] = 'yes';
-  p.voterNames[user.id] = user.name;
-  p.voterPhotos[user.id] = user.photo;
-  p.participants[user.id] = { name: user.name, photo: user.photo };
-
-  saveProposals(proposals);
-  renderApp();
-  toast('🙌 Ti sei aggiunto alla cena!');
-}
-
-// ===== GET CONFIRMED PARTICIPANTS =====
-function getConfirmedParticipants(p) {
-  const votes = p.votes || {};
-  const participants = p.participants || {};
-  // Confirmed = voted yes OR explicitly joined
-  const ids = new Set();
-  Object.keys(votes).forEach(vid => { if (votes[vid] === 'yes') ids.add(vid); });
-  Object.keys(participants).forEach(vid => ids.add(vid));
-  return [...ids];
-}
-
-// ===== DATE POLL =====
-let currentPollProposalId = null;
-
-function openDatePoll(proposalId) {
-  currentPollProposalId = proposalId;
-  const proposals = getProposals();
-  const p = proposals.find(x => x.id === proposalId);
-  if (!p) return;
-
-  const user = getUser();
-  const isCreator = p.authorId === user.id;
-
-  document.getElementById('datepoll-title').textContent = `📅 Date per: ${p.name}`;
-  document.getElementById('datepoll-creator-section').classList.toggle('hidden', !isCreator);
-  document.getElementById('datepoll-new-date').value = '';
-
-  renderDatePoll();
+let currentPollId=null;
+function openDatePoll(id){
+  currentPollId=id;const p=allProposals.find(x=>x.id===id);if(!p)return;
+  document.getElementById('datepoll-title').textContent='📅 Date per: '+p.name;
+  document.getElementById('datepoll-creator-section').classList.toggle('hidden',p.authorId!==getUser().id);
+  document.getElementById('datepoll-new-date').value='';renderDatePoll();
   document.getElementById('modal-datepoll').classList.add('open');
 }
-
-function addDateOption() {
-  const dateVal = document.getElementById('datepoll-new-date').value;
-  if (!dateVal) return;
-  const proposals = getProposals();
-  const p = proposals.find(x => x.id === currentPollProposalId);
-  if (!p) return;
-  if (!p.datePoll) p.datePoll = { dates: [], votes: {} };
-  if (p.datePoll.dates.includes(dateVal)) { toast('Data già presente'); return; }
-  p.datePoll.dates.push(dateVal);
-  p.datePoll.dates.sort();
-  saveProposals(proposals);
-  document.getElementById('datepoll-new-date').value = '';
-  renderDatePoll();
+async function addDateOption(){
+  const dv=document.getElementById('datepoll-new-date').value;if(!dv)return;
+  const p=allProposals.find(x=>x.id===currentPollId);if(!p)return;
+  const dp={dates:[...(p.datePoll?.dates||[])],votes:{...(p.datePoll?.votes||{})}};
+  if(dp.dates.includes(dv)){toast('Data già presente');return}
+  dp.dates.push(dv);dp.dates.sort();
+  await proposalsRef.doc(currentPollId).update({datePoll:dp});
+  document.getElementById('datepoll-new-date').value='';
 }
-
-function toggleDateAvail(dateVal) {
-  const user = getUser();
-  const proposals = getProposals();
-  const p = proposals.find(x => x.id === currentPollProposalId);
-  if (!p || !p.datePoll) return;
-  if (!p.datePoll.votes) p.datePoll.votes = {};
-  if (!p.datePoll.votes[dateVal]) p.datePoll.votes[dateVal] = {};
-
-  const current = p.datePoll.votes[dateVal][user.id];
-  // Cycle: none -> yes -> no -> none
-  if (!current) p.datePoll.votes[dateVal][user.id] = 'yes';
-  else if (current === 'yes') p.datePoll.votes[dateVal][user.id] = 'no';
-  else delete p.datePoll.votes[dateVal][user.id];
-
-  saveProposals(proposals);
-  renderDatePoll();
+async function toggleDateAvail(dv){
+  const u=getUser(),p=allProposals.find(x=>x.id===currentPollId);if(!p?.datePoll)return;
+  const dp={dates:[...(p.datePoll.dates||[])],votes:{}};
+  (p.datePoll.dates||[]).forEach(d=>{dp.votes[d]={...(p.datePoll.votes?.[d]||{})}});
+  if(!dp.votes[dv])dp.votes[dv]={};
+  const cur=dp.votes[dv][u.id];
+  if(!cur)dp.votes[dv][u.id]='yes';else if(cur==='yes')dp.votes[dv][u.id]='no';else delete dp.votes[dv][u.id];
+  await proposalsRef.doc(currentPollId).update({datePoll:dp});
 }
-
-function renderDatePoll() {
-  const proposals = getProposals();
-  const p = proposals.find(x => x.id === currentPollProposalId);
-  if (!p || !p.datePoll) return;
-
-  const user = getUser();
-  const dates = p.datePoll.dates || [];
-  const votes = p.datePoll.votes || {};
-
-  // Find best date
-  let bestDate = null, bestCount = 0;
-  dates.forEach(d => {
-    const dv = votes[d] || {};
-    const yesCount = Object.values(dv).filter(v => v === 'yes').length;
-    if (yesCount > bestCount) { bestCount = yesCount; bestDate = d; }
-  });
-
-  const listEl = document.getElementById('datepoll-dates-list');
-  if (dates.length === 0) {
-    listEl.innerHTML = '<div style="text-align:center;color:var(--text3);padding:24px;font-size:.88rem">Nessuna data proposta ancora</div>';
-    document.getElementById('datepoll-best').textContent = '';
-    return;
-  }
-
-  listEl.innerHTML = dates.map(d => {
-    const dv = votes[d] || {};
-    const yesCount = Object.values(dv).filter(v => v === 'yes').length;
-    const totalVoters = Object.keys(dv).length;
-    const myVote = dv[user.id] || null;
-    const isBest = d === bestDate && bestCount > 0;
-
-    return `<div class="date-item ${isBest ? 'date-best' : ''}">
-      <div>
-        <div class="date-item-text">${formatDate(d)}</div>
-        <div class="voter-count">${yesCount} disponibil${yesCount === 1 ? 'e' : 'i'}</div>
-      </div>
-      <div class="date-avail-btns">
-        <button class="date-avail-btn ${myVote === 'yes' ? 'sel-yes' : ''} ${myVote === 'no' ? 'sel-no' : ''}"
-          onclick="toggleDateAvail('${d}')">${myVote === 'yes' ? '✅' : myVote === 'no' ? '❌' : '○'}</button>
-      </div>
-    </div>`;
+function renderDatePoll(){
+  const p=allProposals.find(x=>x.id===currentPollId);if(!p?.datePoll)return;
+  const u=getUser(),dates=p.datePoll.dates||[],votes=p.datePoll.votes||{};
+  let best=null,bestC=0;
+  dates.forEach(d=>{const yc=Object.values(votes[d]||{}).filter(v=>v==='yes').length;if(yc>bestC){bestC=yc;best=d}});
+  const el=document.getElementById('datepoll-dates-list');
+  if(!dates.length){el.innerHTML='<div style="text-align:center;color:var(--text3);padding:24px;font-size:.88rem">Nessuna data proposta ancora</div>';document.getElementById('datepoll-best').textContent='';return}
+  el.innerHTML=dates.map(d=>{
+    const dv=votes[d]||{},yc=Object.values(dv).filter(v=>v==='yes').length,mv=dv[u.id]||null,ib=d===best&&bestC>0;
+    return'<div class="date-item '+(ib?'date-best':'')+'"><div><div class="date-item-text">'+fmtDate(d)+'</div><div class="voter-count">'+yc+' disponibil'+(yc===1?'e':'i')+'</div></div><div class="date-avail-btns"><button class="date-avail-btn '+(mv==='yes'?'sel-yes':'')+(mv==='no'?' sel-no':'')+'" onclick="toggleDateAvail(\''+d+'\')">'+(mv==='yes'?'✅':mv==='no'?'❌':'○')+'</button></div></div>';
   }).join('');
-
-  document.getElementById('datepoll-best').textContent = bestCount > 0
-    ? `⭐ Data migliore: ${formatDate(bestDate)} (${bestCount} disponibil${bestCount === 1 ? 'e' : 'i'})`
-    : '';
+  document.getElementById('datepoll-best').textContent=bestC>0?'⭐ Data migliore: '+fmtDate(best)+' ('+bestC+' disponibil'+(bestC===1?'e':'i')+')':'';
 }
 
-// ===== CLEAR DATA =====
-function clearAllData() {
-  if (!confirm('Sei sicuro? Tutti i dati verranno cancellati permanentemente.')) return;
-  Object.keys(localStorage).filter(k => k.startsWith('anarchia_')).forEach(k => localStorage.removeItem(k));
-  tempAvatar = null;
-  tempProposalImg = null;
-  toast('Dati cancellati');
-  setTimeout(() => location.reload(), 500);
+function clearLocalData(){
+  if(!confirm('Sei sicuro? Dovrai registrarti di nuovo.'))return;
+  Object.keys(localStorage).filter(k=>k.startsWith('anarchia_')).forEach(k=>localStorage.removeItem(k));
+  toast('Profilo cancellato');setTimeout(()=>location.reload(),500);
 }
-
-// ===== MODAL OUTSIDE CLICK =====
-document.querySelectorAll('.modal-overlay').forEach(overlay => {
-  overlay.addEventListener('click', function(e) {
-    if (e.target === this) this.classList.remove('open');
-  });
-});
-
-// ===== KEYBOARD =====
-document.getElementById('onboard-name').addEventListener('keydown', e => { if (e.key === 'Enter') submitOnboarding(); });
-document.getElementById('access-input').addEventListener('keydown', e => { if (e.key === 'Enter') submitAccess(); });
-
-// ===== INIT =====
+document.querySelectorAll('.modal-overlay').forEach(o=>{o.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open')})});
+document.getElementById('onboard-name').addEventListener('keydown',e=>{if(e.key==='Enter')submitOnboarding()});
+document.getElementById('access-input').addEventListener('keydown',e=>{if(e.key==='Enter')submitAccess()});
 initApp();
 </script>
 </body>
